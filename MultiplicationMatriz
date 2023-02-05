@@ -1,0 +1,61 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+
+using namespace std;
+
+int** crearMatriz();
+void printMatriz(int**, int, int);
+int** multiplicarMatrices(int**, int, int, int**, int, int);
+
+int main() {
+    int** matriz1 = crearMatriz();
+    cout << "Esta es la impresion de la primera matriz" << endl;
+    printMatriz(matriz1, 3, 3);
+    int** matriz2 = crearMatriz();
+    cout << "Esta es la impresion de la segunda matriz" << endl;
+    printMatriz(matriz2, 3, 3);
+    cout << "Esta es la multiplicacion de las dos matrices" << endl;
+    int** matrizResultante = multiplicarMatrices(matriz1, 3, 3, matriz2, 3, 3);
+    printMatriz(matrizResultante, 3, 3);
+    return 0;
+}
+
+int** crearMatriz() {
+    int filas, columnas;
+    cout << "Elige cuantas filas quieres que tenga la matriz:" << endl;
+    cin >> filas;
+    cout << "Elige cuantas columnas quieres que tenga la matriz: " << endl;
+    cin >> columnas;
+    int** matriz = new int*[filas];
+    for (int i = 0; i < filas; i++) {
+        matriz[i] = new int[columnas];
+        for (int j = 0; j < columnas; j++) {
+            matriz[i][j] = rand() % 100;
+        }
+    }
+    return matriz;
+}
+
+void printMatriz(int** matriz, int filas, int columnas) {
+    for (int i = 0; i < filas; i++) {
+        for (int j = 0; j < columnas; j++) {
+            cout << matriz[i][j] << " ";
+        }
+        cout << endl;
+    }
+}
+
+int** multiplicarMatrices(int** matrizA, int filasA, int columnasA, int** matrizB, int filasB, int columnasB) {
+    int** resultado = new int*[filasA];
+    for (int i = 0; i < filasA; i++) {
+        resultado[i] = new int[columnasB];
+        for (int j = 0; j < columnasB; j++) {
+            resultado[i][j] = 0;
+            for (int k = 0; k < columnasA; k++) {
+                resultado[i][j] += matrizA[i][k] * matrizB[k][j];
+            }
+        }
+    }
+    return resultado;
+}
